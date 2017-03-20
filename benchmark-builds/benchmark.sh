@@ -12,7 +12,7 @@ STACK_NAME='rails-deleteme'
 RACK_NAME="squirrels/${STACK_NAME}"
 REPO_URL='git@github.com:convox-examples/rails5.git'
 GIT_DIR_NAME='rails5'
-BUILD_INSTANCE_TYPE='m4.large'
+BUILD_INSTANCE_TYPE='t2.large'
 #############################
 
 die() { echo $*; sleep 3 && exit 1; }
@@ -62,8 +62,8 @@ app_status() {
 
 clone_repo() {
     if [ ! -d ${GIT_DIR_NAME} ]; then
-        echo "[[ git clone "${REPO_URL}" ]]"
-        git clone "${REPO_URL} ${GIT_DIR_NAME}"
+        echo "[[ git clone '${REPO_URL}' '${GIT_DIR_NAME}' ]]"
+        git clone "${REPO_URL}" "${GIT_DIR_NAME}"
     fi
 }
 
@@ -148,8 +148,8 @@ timed_double_build() {
 echo ${RACK_NAME} > .convox/rack
 echo ${GIT_DIR_NAME} > .convox/app
 mkdir -p ${GIT_DIR_NAME}/.convox
-ln -sf .convox/rack ${GIT_DIR_NAME}/.convox
-ln -sf .convox/app ${GIT_DIR_NAME}/.convox
+ln -sf $PWD/.convox/rack ${GIT_DIR_NAME}/.convox
+ln -sf $PWD/.convox/app ${GIT_DIR_NAME}/.convox
 
 fresh_build_instance ${BUILD_INSTANCE_TYPE}
 timed_double_build

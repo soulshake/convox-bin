@@ -29,3 +29,14 @@ delete_buckets() {
         aws s3 rb --force "s3://${bucket}" --region "$region"
     done
 }
+
+list_instance_ips() {
+    for i in $(convox instances | grep -v ^ID | awk '{ print $1 }'); do
+        echo -n $i
+        aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].NetworkInterfaces[*].PrivateIpAddresses[*].Association.PublicIp' \
+            --filters Name=instance-id,Values=$i \
+                | tr -d '[]\n"'
+        echo
+    done
+}

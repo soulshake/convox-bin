@@ -142,7 +142,7 @@ timed_double_build() {
         && create_build
 }
 
-#stack_exists && delete_stack ${STACK_NAME} && wait_until_stack_deleted
+stack_exists && delete_stack ${STACK_NAME} && wait_until_stack_deleted
 #setup_new_rack_and_app
 
 echo ${RACK_NAME} > .convox/rack
@@ -151,5 +151,5 @@ mkdir -p ${GIT_DIR_NAME}/.convox
 ln -sf $PWD/.convox/rack ${GIT_DIR_NAME}/.convox
 ln -sf $PWD/.convox/app ${GIT_DIR_NAME}/.convox
 
-fresh_build_instance ${BUILD_INSTANCE_TYPE}
-timed_double_build
+#fresh_build_instance ${BUILD_INSTANCE_TYPE}
+#timed_double_build

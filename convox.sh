@@ -5,7 +5,7 @@ rack_hostname() {
     aws cloudformation describe-stacks \
         --region $AWS_DEFAULT_REGION \
         --stack-name $1 \
-        --query 'Stacks[*].Outputs[?OutputKey==`Dashboard`].OutputValue' | grep -v "\[" | grep -v "\]"
+        --query 'Stacks[*].Outputs[?OutputKey==`Dashboard`].OutputValue' | tr -d '[]"\n '
 }
 
 cf_stacks() {
